@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Runtime.CompilerServices;
 using Microsoft.Sbom.Api.Manifest.Configuration;
 using Microsoft.Sbom.Api.Output;
 using Microsoft.Sbom.Api.Recorder;
@@ -21,7 +22,7 @@ namespace Microsoft.Sbom.Api.Manifest.ManifestConfigHandlers
         private readonly IConfiguration configuration;
         private readonly IFileSystemUtils fileSystemUtils;
 
-        private string ManifestDirPath => configuration.ManifestDirPath.Value;
+        private string ManifestDirPath => configuration.ManifestDirPath?.Value;
 
         // directory path for SPDX 2.2 is 
         // root/_manifest/spdx_2.2/
