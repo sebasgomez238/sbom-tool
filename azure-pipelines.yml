@@ -21,3 +21,4 @@ steps:
     BuildDropPath: ./src
     BuildComponentPath: src
     FollowSymlinks: false
+    Verbosity: Verbose
