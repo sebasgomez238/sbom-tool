@@ -1,24 +1,67 @@
-# ASP.NET
-# Build and test ASP.NET projects.
-# Add steps that publish symbols, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
-
-trigger:
-- main
+# Docker container
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: ubuntu-latest
 
-variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
+container: mcr.microsoft.com/dotnet-buildtools/prereqs:alpine-3.14-WithNode-20210910135833-c401c85
 
 steps:
-- task: ManifestGeneratorTask@0
-  displayName: 'Manifest Generator '
+
+- task: UseDotNet@2
   inputs:
-    BuildDropPath: ./src
-    BuildComponentPath: src
-    FollowSymlinks: false
-    Verbosity: Verbose
+    packageType: 'sdk'
+    version: '7.0.x'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- task: DownloadPackage@1
+  inputs:
+    packageType: 'nuget'
+    feed: 'c4f45d01-668b-44b8-9395-e3a9de449fe4/89838e7f-c144-4d19-b7c0-4d5412ae4bb2'
+    view: 'cc477b96-af3b-47d6-b0f8-1bf92dbbd0c1'
+    definition: '25d1b6c1-4351-4448-b0a5-ac324c2be62a'
+    version: '1.0.0-ci-20190513-182025'
+    downloadPath: '$(System.ArtifactsDirectory)'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- task: ManifestGeneratorTask@0
+  inputs:
+    BuildDropPath: '$(System.ArtifactsDirectory)'
+    Verbosity: 'Verbose'
+    AdditionalComponentDetectorArgs: "--DirectoryExclusionList **/samples/**"
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.ArtifactsDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- task: DropValidatorTask@0
+  inputs:
+    BuildDropPath: '$(System.ArtifactsDirectory)'
+    OutputPath: '$(System.ArtifactsDirectory)/output.json'
+    ValidateSignature: true
+    Verbosity: 'Verbose'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
