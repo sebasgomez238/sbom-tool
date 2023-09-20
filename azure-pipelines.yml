@@ -17,15 +17,6 @@ steps:
     find $(System.ArtifactsDirectory) -type f
   displayName: 'Print SystemArtifactsDirectory'
 
-- task: DownloadPackage@1
-  inputs:
-    packageType: 'nuget'
-    feed: 'c4f45d01-668b-44b8-9395-e3a9de449fe4/89838e7f-c144-4d19-b7c0-4d5412ae4bb2'
-    view: 'cc477b96-af3b-47d6-b0f8-1bf92dbbd0c1'
-    definition: '25d1b6c1-4351-4448-b0a5-ac324c2be62a'
-    version: '1.0.0-ci-20190513-182025'
-    downloadPath: '$(System.ArtifactsDirectory)'
-
 - script: |
     echo $(System.ArtifactsDirectory)
     find $(System.ArtifactsDirectory) -type f
