@@ -27,7 +27,7 @@ steps:
   inputs:
     BuildDropPath: '$(System.ArtifactsDirectory)'
     Verbosity: 'Verbose'
-    AdditionalComponentDetectorArgs: "--DirectoryExclusionList **/samples/**"
+    AdditionalComponentDetectorArgs: "--DirectoryExclusionList **/sample/**"
 
 - script: |
     echo $(System.ArtifactsDirectory)
