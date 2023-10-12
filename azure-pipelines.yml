@@ -15,7 +15,7 @@ steps:
     
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'build --framework net8.0'
+    command: 'build'
     
 - task: Bash@3
   inputs:
@@ -23,7 +23,7 @@ steps:
     script: 'ls'
 - task: DotNetCoreCLI@2
   inputs:
-    command: 'run'
+    command: 'run --framework net8.0'
     projects: 'src/Microsoft.Sbom.Tool/*.csproj' 
     arguments: 'generate -b "/home/vsts/work/1" -bc "/home/vsts/work/1" -V debug -D true -ps Microsoft -pn SBOMViewer -pv 1.0.0 -li true'
 
