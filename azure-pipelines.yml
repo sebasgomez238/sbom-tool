@@ -1,0 +1,73 @@
+# Docker container
+
+pool:
+  vmImage: ubuntu-latest
+
+container: mcr.microsoft.com/dotnet-buildtools/prereqs:alpine-3.14-WithNode-20210910135833-c401c85
+
+steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+    includePreviewVersions: true
+    
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'ls'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'run'
+    projects: 'src/Microsoft.Sbom.Tool/*.csproj' 
+    arguments: 'generate -b "/home/vsts/work/1" -bc "/home/vsts/work/1" -V debug -D true -ps Microsoft -pn SBOMViewer -pv 1.0.0 -li true'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+# - task: ManifestGeneratorTask@0
+#   inputs:
+#     BuildDropPath: '$(System.ArtifactsDirectory)'
+#     Verbosity: 'Verbose'
+#     AdditionalComponentDetectorArgs: "--DirectoryExclusionList **/sample/**"
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(System.ArtifactsDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+# - task: DropValidatorTask@0
+#   inputs:
+#     BuildDropPath: '$(System.ArtifactsDirectory)'
+#     OutputPath: '$(System.ArtifactsDirectory)/output.json'
+#     ValidateSignature: true
+#     Verbosity: 'Verbose'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
