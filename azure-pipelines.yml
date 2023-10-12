@@ -12,22 +12,26 @@ steps:
     packageType: 'sdk'
     version: '8.0.x'
     includePreviewVersions: true
-
-- script: |
-    echo $(System.ArtifactsDirectory)
-    find $(System.ArtifactsDirectory) -type f
-  displayName: 'Print SystemArtifactsDirectory'
-
-- script: |
-    echo $(System.ArtifactsDirectory)
-    find $(System.ArtifactsDirectory) -type f
-  displayName: 'Print SystemArtifactsDirectory'
-
-- task: ManifestGeneratorTask@0
+    
+- task: DotNetCoreCLI@2
   inputs:
-    BuildDropPath: '$(System.ArtifactsDirectory)'
-    Verbosity: 'Verbose'
-    AdditionalComponentDetectorArgs: "--DirectoryExclusionList **/sample/**"
+    command: 'build'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+- script: |
+    echo $(System.ArtifactsDirectory)
+    find $(System.ArtifactsDirectory) -type f
+  displayName: 'Print SystemArtifactsDirectory'
+
+# - task: ManifestGeneratorTask@0
+#   inputs:
+#     BuildDropPath: '$(System.ArtifactsDirectory)'
+#     Verbosity: 'Verbose'
+#     AdditionalComponentDetectorArgs: "--DirectoryExclusionList **/sample/**"
 
 - script: |
     echo $(System.ArtifactsDirectory)
@@ -45,12 +49,12 @@ steps:
     find $(System.ArtifactsDirectory) -type f
   displayName: 'Print SystemArtifactsDirectory'
 
-- task: DropValidatorTask@0
-  inputs:
-    BuildDropPath: '$(System.ArtifactsDirectory)'
-    OutputPath: '$(System.ArtifactsDirectory)/output.json'
-    ValidateSignature: true
-    Verbosity: 'Verbose'
+# - task: DropValidatorTask@0
+#   inputs:
+#     BuildDropPath: '$(System.ArtifactsDirectory)'
+#     OutputPath: '$(System.ArtifactsDirectory)/output.json'
+#     ValidateSignature: true
+#     Verbosity: 'Verbose'
 
 - script: |
     echo $(System.ArtifactsDirectory)
