@@ -17,7 +17,11 @@ steps:
   inputs:
     command: 'build'
 
-
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: .\src\Microsoft.Sbom.DotNetTool\
+    arguments: 'generate -b "/home/vsts/work/1" -bc "/home/vsts/work/1" -V debug -D true -ps Microsoft -pn SBOMViewer -pv 1.0.0 -li true'
 
 - script: |
     echo $(System.ArtifactsDirectory)
