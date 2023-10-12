@@ -17,6 +17,8 @@ steps:
   inputs:
     command: 'build'
 
+
+
 - script: |
     echo $(System.ArtifactsDirectory)
     find $(System.ArtifactsDirectory) -type f
