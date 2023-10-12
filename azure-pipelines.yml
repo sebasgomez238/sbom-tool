@@ -11,6 +11,7 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '8.0.x'
+    includePreviewVersions: true
 
 - script: |
     echo $(System.ArtifactsDirectory)
