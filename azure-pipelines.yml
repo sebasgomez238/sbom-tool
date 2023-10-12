@@ -16,16 +16,16 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'dotnet run --framework net8.0 --project src/Microsoft.Sbom.Tool generate -b "/home/vsts/work/1" -bc "/home/vsts/work/1" -V debug -D true -ps Microsoft -pn SBOMViewer -pv 1.0.0 -li true'
 
 - task: Bash@3
   inputs:
     targetType: 'inline'
     script: 'pwd'
+    
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'dotnet run --framework net8.0 --project src/Microsoft.Sbom.Tool generate -b "/home/vsts/work/1" -bc "/home/vsts/work/1" -V debug -D true -ps Microsoft -pn SBOMViewer -pv 1.0.0 -li true'
 
 
 - script: |
